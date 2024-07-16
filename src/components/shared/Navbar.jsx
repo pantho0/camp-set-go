@@ -14,6 +14,9 @@ const navLinks = (
       <NavLink to="/management">Products Management</NavLink>
     </li>
     <li>
+      <NavLink to="/cart">Cart</NavLink>
+    </li>
+    <li>
       <NavLink to="/aboutus">About Us</NavLink>
     </li>
   </>
