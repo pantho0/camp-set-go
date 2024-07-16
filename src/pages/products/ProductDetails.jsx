@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Container from "../../components/ui/Container";
 import { useQuery } from "@tanstack/react-query";
@@ -11,11 +11,13 @@ import { FaDollarSign } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cartsSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
   const axiosPublic = useAxios();
   const [quantity, setQuantity] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data: product = {} } = useQuery({
     queryKey: ["product"],
@@ -29,12 +31,14 @@ const ProductDetails = () => {
     e.preventDefault();
     setQuantity(e.target.value);
   };
-  console.log(quantity);
+
   const handleCart = () => {
     if (quantity > product.data?.stockQuantity) {
-      return window.alert("You can not select larger than quantity");
+      return toast.error("You can not select larger than quantity");
     }
     dispatch(addToCart({ ...product.data, quantity }));
+    toast.success("Product added to cart");
+    navigate("/cart");
   };
 
   return (
@@ -89,11 +93,9 @@ const ProductDetails = () => {
                     />
                   </label>
                 </div>
-                <Link to={`/cart/${product?.data?._id}`}>
-                  <button onClick={handleCart} className="btn btn-outline">
-                    Add To Cart
-                  </button>
-                </Link>
+                <button onClick={handleCart} className="btn btn-outline">
+                  Add To Cart
+                </button>
               </div>
             </div>
           </div>
