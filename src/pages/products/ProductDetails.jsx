@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Container from "../../components/ui/Container";
 import { useQuery } from "@tanstack/react-query";
@@ -8,9 +8,14 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { FaDollarSign } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/features/cartsSlice";
+import { useState } from "react";
 
 const ProductDetails = () => {
   const axiosPublic = useAxios();
+  const [quantity, setQuantity] = useState(0);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const { data: product = {} } = useQuery({
     queryKey: ["product"],
@@ -19,6 +24,19 @@ const ProductDetails = () => {
       return data;
     },
   });
+
+  const handleQuantity = (e) => {
+    e.preventDefault();
+    setQuantity(e.target.value);
+  };
+  console.log(quantity);
+  const handleCart = () => {
+    if (quantity > product.data?.stockQuantity) {
+      return window.alert("You can not select larger than quantity");
+    }
+    dispatch(addToCart({ ...product.data, quantity }));
+  };
+
   return (
     <Container>
       <div className="flex flex-col gap-0 px-4 mt-2 md:flex-row md:gap-16 md:py-16">
@@ -52,12 +70,30 @@ const ProductDetails = () => {
               <FaDollarSign size={18} />
               {product?.data?.price}{" "}
             </p>
+            <h2 className="text-xl md:text-base font-bold">
+              In-Stock : {product?.data?.stockQuantity}
+            </h2>
             <p className="text-slate-500">{product?.data?.description}</p>
             <div className="divider"></div>
 
             <div className="flex justify-center gap-2 md:justify-start md:gap-4">
               <div className="flex flex-col px-16 md:flex-row gap-2 md:px-0">
-                <button className="btn btn-outline">Add To Cart</button>
+                <div>
+                  <label className="input input-bordered flex items-center gap-2">
+                    Enter Quantity :
+                    <input
+                      onBlur={handleQuantity}
+                      type="text"
+                      className="grow"
+                      placeholder="Daisy"
+                    />
+                  </label>
+                </div>
+                <Link to={`/cart/${product?.data?._id}`}>
+                  <button onClick={handleCart} className="btn btn-outline">
+                    Add To Cart
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
