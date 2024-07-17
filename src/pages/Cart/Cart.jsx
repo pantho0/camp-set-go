@@ -8,10 +8,18 @@ import {
   minusQuantity,
   removeFromCart,
 } from "../../redux/features/cartsSlice";
+import { useState } from "react";
+import CheckOutModal from "../../components/modals/CheckOutModal";
 
 const Cart = () => {
+  let [isOpen, setIsOpen] = useState(false);
   const cart = useSelector((state) => state.carts.carts);
   const dispatch = useDispatch();
+
+  //modal controlling functions
+  function open() {
+    setIsOpen(true);
+  }
 
   const totalPrice = cart.reduce(
     (acc, cart) => acc + cart.price * cart.quantity,
@@ -32,6 +40,7 @@ const Cart = () => {
 
   return (
     <>
+      <CheckOutModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="flex z-50 flex-col text-center p-4 lg:flex-row justify-center bg-secondary/60 rounded-lg text-white">
         <div className="lg:p-6">
           <p className="text-2xl text-black font-bold">Shopping Cart</p>
@@ -138,7 +147,10 @@ const Cart = () => {
                 <hr className="mt-6" />
 
                 <div className="p-3 mt-4">
-                  <button className="btn btn-primary bg-green-900 border-none hover:bg-accent hover:text-black btn-md rounded-md w-full">
+                  <button
+                    onClick={open}
+                    className="btn btn-primary bg-green-900 border-none hover:bg-accent hover:text-black btn-md rounded-md w-full"
+                  >
                     Check Out
                   </button>
                 </div>
