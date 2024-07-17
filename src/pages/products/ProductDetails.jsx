@@ -17,7 +17,6 @@ const ProductDetails = () => {
   const axiosPublic = useAxios();
   const [quantity, setQuantity] = useState(0);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
   const { data: product = {} } = useQuery({
     queryKey: ["product"],
@@ -41,7 +40,6 @@ const ProductDetails = () => {
     }
     dispatch(addToCart({ ...product.data, quantity }));
     toast.success("Product added to cart");
-    navigate("/cart");
   };
 
   return (
