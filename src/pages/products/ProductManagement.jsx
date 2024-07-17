@@ -6,14 +6,21 @@ import Container from "../../components/ui/Container";
 import { useState } from "react";
 import AddProductModal from "../../components/modals/AddProductModal";
 import toast from "react-hot-toast";
+import ProductUpdateModal from "../../components/modals/ProductUpdateModal";
 
 const ProductManagement = () => {
   let [isOpen, setIsOpen] = useState(false);
+  let [isOpenUpdate, setIsOpenUpdate] = useState(false);
+  const [product, setProduct] = useState({});
   const axiosPublic = useAxios();
 
   //modal controlling functions
   function open() {
     setIsOpen(true);
+  }
+
+  function openUpdate() {
+    setIsOpenUpdate(true);
   }
 
   const {
@@ -49,6 +56,12 @@ const ProductManagement = () => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         refetch={refetch}
+      />
+      <ProductUpdateModal
+        isOpenUpdate={isOpenUpdate}
+        setIsOpenUpdate={setIsOpenUpdate}
+        refetch={refetch}
+        product={product}
       />
       <div className="flex z-50 flex-col text-center p-4 lg:flex-row justify-center bg-secondary/60 rounded-lg text-white">
         <div className="lg:p-6">
@@ -99,7 +112,11 @@ const ProductManagement = () => {
                           className="btn btn-xs tooltip"
                           data-tip="Update"
                         >
-                          <LuFileEdit size={20} color="green" />
+                          <LuFileEdit
+                            onClick={() => [openUpdate(), setProduct(product)]}
+                            size={20}
+                            color="green"
+                          />
                         </button>
 
                         <div className="tooltip" data-tip="Delete">
