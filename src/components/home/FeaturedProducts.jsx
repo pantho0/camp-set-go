@@ -43,8 +43,8 @@ const FeaturedProducts = () => {
               </button>
 
               <img
-                src="https://images.unsplash.com/photo-1599481238640-4c1288750d7a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2664&q=80"
-                alt=""
+                src={product?.images[0]}
+                alt={`${product?.name} image`}
                 className="h-96 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-72"
               />
 
@@ -59,7 +59,7 @@ const FeaturedProducts = () => {
 
                 <form className="mt-4">
                   <button className="block w-full rounded bg-primary/70 text-base-100 p-4 text-sm font-medium transition hover:scale-105">
-                    Add to Cart
+                    Details
                   </button>
                 </form>
               </div>
@@ -67,9 +67,11 @@ const FeaturedProducts = () => {
           ))}
         </div>
         <div className="flex justify-center">
-          <button className="block rounded bg-primary/70 text-base-100 px-8 py-4 text-sm font-medium transition hover:scale-105">
-            View All
-          </button>
+          <Link to="/products">
+            <button className="block rounded bg-primary/70 text-base-100 px-8 py-4 text-sm font-medium transition hover:scale-105">
+              View All
+            </button>
+          </Link>
         </div>
       </div>
     </Container>

@@ -73,7 +73,7 @@ export default function ProductUpdateModal({
       images,
       ratings: 5.0,
     };
-    console.log(product);
+
     const { data } = await axiosPublic.put(
       `/products/update-product/${id}`,
       product
