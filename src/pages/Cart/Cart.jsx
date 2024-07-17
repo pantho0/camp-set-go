@@ -149,6 +149,7 @@ const Cart = () => {
                 <div className="p-3 mt-4">
                   <button
                     onClick={open}
+                    disabled={cart.length === 0}
                     className="btn btn-primary bg-green-900 border-none hover:bg-accent hover:text-black btn-md rounded-md w-full"
                   >
                     Check Out
