@@ -2,10 +2,14 @@ import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { uploadImage } from "../api/api";
 import toast from "react-hot-toast";
+import useAxios from "../hooks/useAxios";
+import useCategories from "../hooks/useCategories";
 
-export default function AddProductModal({ isOpen, setIsOpen }) {
+export default function AddProductModal({ isOpen, setIsOpen, refetch }) {
   const [allImages, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");
+  const categories = useCategories();
+  const axiosPublic = useAxios();
 
   function close() {
     setIsOpen(false);
@@ -37,7 +41,7 @@ export default function AddProductModal({ isOpen, setIsOpen }) {
     uploadProductImage(image);
   };
 
-  const handleAddProduct = (e) => {
+  const handleAddProduct = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -56,8 +60,16 @@ export default function AddProductModal({ isOpen, setIsOpen }) {
       images,
       ratings: 5.0,
     };
-
     console.log(product);
+    const { data } = await axiosPublic.post("/products/add-product", product);
+    console.log(data);
+    if (data.success) {
+      toast.success("Product Added Successfully");
+      setImages([]);
+      setSelectedImage("");
+      refetch();
+      close();
+    }
   };
 
   return (
@@ -102,7 +114,14 @@ export default function AddProductModal({ isOpen, setIsOpen }) {
                         name="category"
                         className="select select-bordered uppercase bg-white"
                       >
-                        <option selected disabled></option>
+                        <option selected disabled>
+                          Plese Select Category
+                        </option>
+                        {categories?.categories?.map((cat) => (
+                          <option className="uppercase" key={cat.name}>
+                            {cat.name}
+                          </option>
+                        ))}
                       </select>
                     </label>
                   </div>

@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import Container from "../../components/ui/Container";
 import { useState } from "react";
 import AddProductModal from "../../components/modals/AddProductModal";
+import toast from "react-hot-toast";
 
 const ProductManagement = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,11 @@ const ProductManagement = () => {
     setIsOpen(true);
   }
 
-  const { data: products = [], isLoading } = useQuery({
+  const {
+    data: products = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const { data } = await axiosPublic("/products");
@@ -29,9 +34,22 @@ const ProductManagement = () => {
       </div>
     );
   }
+
+  const handleDelete = async (id) => {
+    const { data } = await axiosPublic.delete(`/products/${id}`);
+    if (data.success) {
+      toast.success("Product Deleted");
+      refetch();
+    }
+  };
+
   return (
     <div>
-      <AddProductModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <AddProductModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        refetch={refetch}
+      />
       <div className="flex z-50 flex-col text-center p-4 lg:flex-row justify-center bg-secondary/60 rounded-lg text-white">
         <div className="lg:p-6">
           <p className="text-2xl text-black font-bold">Product Management</p>
@@ -86,6 +104,7 @@ const ProductManagement = () => {
 
                         <div className="tooltip" data-tip="Delete">
                           <MdDelete
+                            onClick={() => handleDelete(product?._id)}
                             size={20}
                             className="cursor-pointer"
                             color="red"
