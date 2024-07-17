@@ -1,8 +1,11 @@
-import React from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Container from "../../components/ui/Container";
 
 const CheckOut = () => {
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
   return (
     <Container>
       <div className="py-16 text-center">
