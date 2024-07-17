@@ -3,9 +3,18 @@ import useAxios from "../../components/hooks/useAxios";
 import { LuFileEdit } from "react-icons/lu";
 import { MdDelete } from "react-icons/md";
 import Container from "../../components/ui/Container";
+import { useState } from "react";
+import AddProductModal from "../../components/modals/AddProductModal";
 
 const ProductManagement = () => {
+  let [isOpen, setIsOpen] = useState(false);
   const axiosPublic = useAxios();
+
+  //modal controlling functions
+  function open() {
+    setIsOpen(true);
+  }
+
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -22,13 +31,20 @@ const ProductManagement = () => {
   }
   return (
     <div>
+      <AddProductModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="flex z-50 flex-col text-center p-4 lg:flex-row justify-center bg-secondary/60 rounded-lg text-white">
         <div className="lg:p-6">
           <p className="text-2xl text-black font-bold">Product Management</p>
           <p className="text-sm text-gray-600">Inventory</p>
         </div>
       </div>
+
       <Container>
+        <div className="mt-4 flex justify-end">
+          <button onClick={open} className="btn btn-secondary">
+            Add New Product
+          </button>
+        </div>
         <div className="overflow-x-auto">
           <table className="table">
             {/* head */}
