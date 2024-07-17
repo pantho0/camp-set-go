@@ -24,7 +24,9 @@ export default function AddProductModal({ isOpen, setIsOpen, refetch }) {
     try {
       const url = await uploadImage(image);
       if (url) {
-        toast.success("Product Image Uploaded");
+        toast.success(
+          "Product Image Uploaded! You can uploade again more images"
+        );
       }
       setImages([...allImages, url]);
       setSelectedImage("");

@@ -17,7 +17,7 @@ const FeaturedProducts = () => {
       <div className="py-16">
         <h2 className="text-3xl font-medium text-center">Featured Products</h2>
         <div className="grid md:grid-cols-3 lg:grid-cols-3 gap-4 py-10">
-          {products?.data?.map((product) => (
+          {products?.data?.slice(0, 6).map((product) => (
             <Link
               key={product._id}
               to={`products/${product._id}`}
