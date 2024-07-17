@@ -7,7 +7,7 @@ import { Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { FaDollarSign } from "react-icons/fa";
+import { FaDollarSign, FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cartsSlice";
 import { useState } from "react";
@@ -71,6 +71,9 @@ const ProductDetails = () => {
             <h2 className="text-xl md:text-3xl font-bold">
               {product?.data?.name}
             </h2>
+            <p className="text-lg font-medium text-orange-400 flex items-center gap-[2px]">
+              Rating : {product?.data?.ratings} <FaStar />
+            </p>
             <p className="text-2xl font-bold text-green-800 flex justify-center items-center md:justify-start">
               <FaDollarSign size={18} />
               {product?.data?.price}{" "}
