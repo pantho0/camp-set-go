@@ -10,6 +10,7 @@ import {
 } from "../../redux/features/cartsSlice";
 import { useState } from "react";
 import CheckOutModal from "../../components/modals/CheckOutModal";
+import Swal from "sweetalert2";
 
 const Cart = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,24 @@ const Cart = () => {
   );
 
   const handleDelete = (id) => {
-    dispatch(removeFromCart(id));
+    Swal.fire({
+      title: "Are you sure to delete the product from cart?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(removeFromCart(id));
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your product has been deleted from the cart.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const handleAddQuantity = (id) => {
@@ -87,7 +105,7 @@ const Cart = () => {
                           <button
                             disabled={item?.quantity < 2}
                             onClick={() => handleMinusQuantity(item._id)}
-                            className="btn btn-xs rounded-none btn-accent mr-4"
+                            className="btn btn-xs rounded-none bg-secondary hover:bg-secondary/80 border-none btn-accent mr-4"
                           >
                             -
                           </button>
@@ -95,14 +113,14 @@ const Cart = () => {
                           <button
                             disabled={item?.quantity === item.stockQuantity}
                             onClick={() => handleAddQuantity(item._id)}
-                            className="btn btn-xs rounded-none btn-accent ml-4"
+                            className="btn btn-xs bg-secondary border-none hover:bg-secondary/80 rounded-none btn-accent ml-4"
                           >
                             +
                           </button>
                         </div>
                         <button
                           onClick={() => handleDelete(item._id)}
-                          className="btn btn-primary btn-xs"
+                          className="btn btn-primary btn-xs "
                         >
                           <MdDeleteSweep size={18} color="white" />
                         </button>
@@ -114,7 +132,7 @@ const Cart = () => {
             </div>
             <div className="md:min-w-[33%] lg:m-5 h-1/2 rounded-2xl shadow-2xl">
               <div className="w-full md:w-full lg:w-full bg-white rounded-lg">
-                <div className="text-center p-4 bg-black text-white rounded-tr-2xl rounded-tl-2xl">
+                <div className="text-center p-4 bg-primary text-white rounded-tr-2xl rounded-tl-2xl">
                   <p>Billing Summary</p>
                 </div>
                 <div className="flex justify-between px-4 pt-4 text-sm text-gray-500">
@@ -150,7 +168,7 @@ const Cart = () => {
                   <button
                     onClick={open}
                     disabled={cart.length === 0}
-                    className="btn btn-primary bg-green-900 border-none hover:bg-accent hover:text-black btn-md rounded-md w-full"
+                    className="btn btn-primary bg-primary border-none hover:bg-primary/50 hover:text-black btn-md rounded-md w-full"
                   >
                     Check Out
                   </button>

@@ -7,6 +7,7 @@ import { useState } from "react";
 import AddProductModal from "../../components/modals/AddProductModal";
 import toast from "react-hot-toast";
 import ProductUpdateModal from "../../components/modals/ProductUpdateModal";
+import Swal from "sweetalert2";
 
 const ProductManagement = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -43,11 +44,28 @@ const ProductManagement = () => {
   }
 
   const handleDelete = async (id) => {
-    const { data } = await axiosPublic.delete(`/products/${id}`);
-    if (data.success) {
-      toast.success("Product Deleted");
-      refetch();
-    }
+    Swal.fire({
+      title: "Are you want to delete the product?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data } = await axiosPublic.delete(`/products/${id}`);
+        if (data.success) {
+          toast.success("Product Deleted");
+          refetch();
+        }
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your product has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   return (
@@ -72,7 +90,10 @@ const ProductManagement = () => {
 
       <Container>
         <div className="mt-4 flex justify-end">
-          <button onClick={open} className="btn btn-secondary">
+          <button
+            onClick={open}
+            className="btn btn-ghost border-2 border-dashed border-secondary/50 hover:bg-secondary"
+          >
             Add New Product
           </button>
         </div>

@@ -36,6 +36,9 @@ const ProductDetails = () => {
     if (quantity > product.data?.stockQuantity) {
       return toast.error("You can not select larger than quantity");
     }
+    if (!quantity) {
+      return toast.error("Please select quantity");
+    }
     dispatch(addToCart({ ...product.data, quantity }));
     toast.success("Product added to cart");
     navigate("/cart");
@@ -89,7 +92,7 @@ const ProductDetails = () => {
                       onBlur={handleQuantity}
                       type="text"
                       className="grow"
-                      placeholder="Daisy"
+                      placeholder="Enter quantity"
                     />
                   </label>
                 </div>

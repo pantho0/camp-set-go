@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import MainLayout from "./layouts/MainLayout";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 
 function App() {
   const cart = useSelector((state) => state.carts.carts);

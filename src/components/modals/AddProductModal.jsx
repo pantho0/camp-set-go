@@ -190,7 +190,7 @@ export default function AddProductModal({ isOpen, setIsOpen, refetch }) {
                       </div>
                       <button
                         onClick={handleImagesUpload}
-                        className="btn btn-primary bg-green-900 border-none hover:bg-accent hover:text-black"
+                        className="btn btn-primary bg-primary text-white border-none hover:bg-accent hover:text-black"
                       >
                         Add Image
                       </button>
@@ -210,16 +210,16 @@ export default function AddProductModal({ isOpen, setIsOpen, refetch }) {
                     </label>
                   </div>
                   <div className="flex justify-center mt-6 mb-10">
-                    <button className="btn btn-primary bg-green-900 border-none hover:bg-accent hover:text-black hover:btn-accent cursor-pointer">
+                    <button className="btn btn-primary bg-primary text-white border-none hover:bg-accent hover:text-black hover:btn-accent cursor-pointer">
                       <input type="submit" value="Update Product" />
                     </button>
                   </div>
                 </form>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-4 flex justify-center">
                 <Button
-                  className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                  className="inline-flex items-center gap-2 rounded-md bg-primary py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                   onClick={close}
                 >
                   Close
