@@ -1,9 +1,10 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { uploadImage } from "../api/api";
 import toast from "react-hot-toast";
 import useAxios from "../hooks/useAxios";
 import useCategories from "../hooks/useCategories";
+import { MdDelete } from "react-icons/md";
 
 export default function ProductUpdateModal({
   isOpenUpdate,
@@ -15,9 +16,7 @@ export default function ProductUpdateModal({
   const [selectedImage, setSelectedImage] = useState("");
   const categories = useCategories();
   const axiosPublic = useAxios();
-
-  console.log(product.name);
-
+  const [id, setId] = useState("");
   function close() {
     setIsOpenUpdate(false);
   }
@@ -48,7 +47,14 @@ export default function ProductUpdateModal({
     uploadProductImage(image);
   };
 
-  const handleAddProduct = async (e) => {
+  const handleDelete = (index) => {
+    console.log(index);
+    const newImages = allImages.filter((_, i) => i !== index);
+    console.log(newImages);
+    setImages(newImages);
+  };
+
+  const handleUpdateProduct = async (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -68,16 +74,27 @@ export default function ProductUpdateModal({
       ratings: 5.0,
     };
     console.log(product);
-    const { data } = await axiosPublic.post("/products/add-product", product);
+    const { data } = await axiosPublic.put(
+      `/products/update-product/${id}`,
+      product
+    );
     console.log(data);
     if (data.success) {
       toast.success("Product Added Successfully");
       setImages([]);
+      setId("");
       setSelectedImage("");
       refetch();
       close();
     }
   };
+
+  useEffect(() => {
+    setId(product?._id);
+    setImages(product?.images);
+  }, [product?.images, product?._id]);
+
+  console.log(allImages);
 
   return (
     <>
@@ -100,7 +117,7 @@ export default function ProductUpdateModal({
                 Update Product
               </DialogTitle>
               <div className="px-10 mt-10">
-                <form onSubmit={handleAddProduct}>
+                <form onSubmit={handleUpdateProduct}>
                   <div className="flex flex-col gap-2">
                     <label className="form-control w-full">
                       <div className="label">
@@ -164,19 +181,27 @@ export default function ProductUpdateModal({
                   </div>
 
                   <div className="border-2 border-dashed border-secondary p-4 my-2">
-                    {allImages.length === 0 ? (
+                    {allImages && allImages?.length === 0 ? (
                       <p className="text-black">No image selected yet</p>
                     ) : (
                       <div className="flex flex-wrap gap-2">
-                        {allImages.map((image, idx) => (
-                          <div key={idx} className="flex gap-2">
-                            <img
-                              className="w-[50px] h-[50px] object-cover"
-                              src={image}
-                              alt=""
-                            />
-                          </div>
-                        ))}
+                        {allImages &&
+                          allImages.map((image, idx) => (
+                            <div key={idx} className="flex gap-2 relative">
+                              <img
+                                className="w-[50px] h-[50px] object-cover"
+                                src={image}
+                                alt=""
+                              />
+                              <div className="absolute right-0 top-0">
+                                <MdDelete
+                                  onClick={() => handleDelete(idx)}
+                                  className="text-red-700 bg-white cursor-pointer"
+                                  size={17}
+                                />
+                              </div>
+                            </div>
+                          ))}
                       </div>
                     )}
                   </div>

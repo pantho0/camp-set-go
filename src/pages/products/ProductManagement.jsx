@@ -92,12 +92,13 @@ const ProductManagement = () => {
                 products?.data?.map((product) => (
                   <tr key={product?._id}>
                     <td>
-                      <div className="flex items-center justify-center gap-3">
+                      <div className="flex items-center justify-start gap-4">
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
                             <img src={product?.images[0]} />
                           </div>
                         </div>
+                        <p>{product?.name}</p>
                       </div>
                     </td>
                     <td>
