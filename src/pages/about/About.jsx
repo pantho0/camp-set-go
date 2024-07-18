@@ -6,19 +6,22 @@ const About = () => {
       name: "John Doe",
       position: "Founder & CEO",
       bio: "John is an avid camper with over 20 years of experience in the outdoor industry.",
-      photo: "https://via.placeholder.com/150",
+      photo:
+        "https://www.qtrainers.com/upload/profile/160/2020/02/profile_35405e4683b309238.jpg",
     },
     {
       name: "Jane Smith",
       position: "Marketing Director",
       bio: "Jane loves promoting the great outdoors and connecting with the camping community.",
-      photo: "https://via.placeholder.com/150",
+      photo:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQey3S6VQ4qIppedXehx8CQYDshaMBwU1UwpQ&s",
     },
     {
       name: "Mike Johnson",
       position: "Product Manager",
       bio: "Mike ensures that our products meet the highest standards of quality and functionality.",
-      photo: "https://via.placeholder.com/150",
+      photo:
+        "https://blog.kingland.com/hubfs/leadership-2022/Leadership_Matt-Good.jpg",
     },
   ];
 
@@ -57,7 +60,7 @@ const About = () => {
         </div>
       </div>
 
-      <div className="flex gap-10">
+      <div className="flex flex-col md:flex-row gap-10">
         <div className="flex-0">
           <div className="mb-8">
             <h2 className="text-2xl font-semibold mb-6">Contact Information</h2>
