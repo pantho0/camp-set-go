@@ -9,7 +9,14 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      state.carts.push(action.payload);
+      const itemInCart = state.carts.find(
+        (item) => item._id === action.payload._id
+      );
+      if (itemInCart) {
+        itemInCart.quantity += 1;
+      } else {
+        state.carts.push({ ...action.payload, quantity: 1 });
+      }
     },
     removeFromCart: (state, action) => {
       const filter = state.carts.filter((item) => item._id !== action.payload);

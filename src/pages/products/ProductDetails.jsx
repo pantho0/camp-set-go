@@ -81,7 +81,7 @@ const ProductDetails = () => {
 
             <div className="flex justify-center gap-2 md:justify-start md:gap-4">
               <div className="flex flex-col px-16 md:flex-row gap-2 md:px-0">
-                {product?.data.stockQuantity === 0 ? (
+                {product?.data?.stockQuantity === 0 ? (
                   <button className="btn btn-outline cursor-not-allowed">
                     Out of stock
                   </button>
