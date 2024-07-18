@@ -1,6 +1,6 @@
 # Camp-Set-Go E-commerce Website
 
-# [Live Site : Camp-Set-Go ](https://github.com/pantho0/campers-shop-backend.git)
+# [Live Site : Camp-Set-Go ](https://camp-set-go.vercel.app)
 
 This is the GitHub repository for Camp Set Go, an e-commerce website built with React, Tailwind CSS, and a Node.js backend. It allows users to browse, purchase camping accessories, and manage their orders.
 
