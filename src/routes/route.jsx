@@ -7,6 +7,7 @@ import Cart from "../pages/Cart/Cart";
 import ProductManagement from "../pages/products/ProductManagement";
 import CheckOut from "../pages/Chekout/CheckOut";
 import About from "../pages/about/About";
+import Gallery from "../pages/gallery/Gallery";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "aboutus",
         element: <About />,
+      },
+      {
+        path: "gallery",
+        element: <Gallery />,
       },
     ],
   },

@@ -20,6 +20,9 @@ const navLinks = (
     <li>
       <NavLink to="/aboutus">About Us</NavLink>
     </li>
+    <li>
+      <NavLink to="/gallery">Gallery</NavLink>
+    </li>
   </>
 );
 
