@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cartsSlice";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const ProductDetails = () => {
   const axiosPublic = useAxios();
@@ -39,6 +40,9 @@ const ProductDetails = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Camp-Set-Go || Product Details</title>
+      </Helmet>
       <div className="flex flex-col gap-0 px-4 mt-2 md:flex-row md:gap-16 md:py-16">
         <div className="w-full md:w-96 lg:w-96">
           <Swiper

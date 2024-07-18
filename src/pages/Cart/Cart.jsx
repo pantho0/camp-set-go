@@ -12,6 +12,7 @@ import { useState } from "react";
 import CheckOutModal from "../../components/modals/CheckOutModal";
 import Swal from "sweetalert2";
 import useAxios from "./../../components/hooks/useAxios";
+import { Helmet } from "react-helmet-async";
 
 const Cart = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -75,6 +76,9 @@ const Cart = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Camp-Set-Go || Cart</title>
+      </Helmet>
       <CheckOutModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="flex z-50 flex-col text-center p-4 lg:flex-row justify-center bg-secondary/60 rounded-lg text-white">
         <div className="lg:p-6">

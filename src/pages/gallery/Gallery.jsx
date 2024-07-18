@@ -10,6 +10,7 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Helmet } from "react-helmet-async";
 
 const Gallery = () => {
   const axiosPublic = useAxios();
@@ -30,6 +31,9 @@ const Gallery = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Camp-Set-Go || Gallery</title>
+      </Helmet>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

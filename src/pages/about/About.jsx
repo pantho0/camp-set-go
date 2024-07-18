@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const About = () => {
@@ -27,6 +28,9 @@ const About = () => {
 
   return (
     <div className="container mx-auto p-8">
+      <Helmet>
+        <title>Camp-Set-Go || About</title>
+      </Helmet>
       <h1 className="text-4xl font-bold mb-4 text-center">About Us</h1>
 
       <div className="mb-8">

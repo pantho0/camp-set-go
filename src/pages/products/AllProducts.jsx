@@ -3,6 +3,7 @@ import Container from "../../components/ui/Container";
 import useAxios from "../../components/hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AllProducts = () => {
   const axiosPublic = useAxios();
@@ -43,6 +44,9 @@ const AllProducts = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Camp-Set-Go || Products</title>
+      </Helmet>
       <div className="py-16">
         <h2 className="text-3xl font-medium text-center">All Products</h2>
 

@@ -8,6 +8,7 @@ import AddProductModal from "../../components/modals/AddProductModal";
 import toast from "react-hot-toast";
 import ProductUpdateModal from "../../components/modals/ProductUpdateModal";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ProductManagement = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -70,6 +71,9 @@ const ProductManagement = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Camp-Set-Go || Products Management</title>
+      </Helmet>
       <AddProductModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
