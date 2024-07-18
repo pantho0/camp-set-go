@@ -1,14 +1,18 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { emptyCart } from "../../redux/features/cartsSlice";
 
 export default function CheckOutModal({ isOpen, setIsOpen }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   function close() {
     setIsOpen(false);
   }
 
   const handleCheckOut = async (e) => {
     e.preventDefault();
+    dispatch(emptyCart());
     navigate("/checkout-success");
     close();
   };
@@ -43,6 +47,19 @@ export default function CheckOutModal({ isOpen, setIsOpen }) {
                       <input
                         type="text"
                         name="name"
+                        placeholder="Type here"
+                        className="input input-bordered w-full bg-white"
+                      />
+                    </label>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="form-control w-full">
+                      <div className="label">
+                        <span className="label-text">Emai</span>
+                      </div>
+                      <input
+                        type="text"
+                        name="email"
                         placeholder="Type here"
                         className="input input-bordered w-full bg-white"
                       />
