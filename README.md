@@ -51,7 +51,7 @@ This is the GitHub repository for Camp Set Go, an e-commerce website built with 
 ```
 
 PORT=3000
-DB_URL=mongodb+srv://campshop:jTp7mKWZC8qnmkaI@cluster0.guubgk2.mongodb.net/campers-shop?retryWrites=true&w=majority&appName=Cluster0
+DB_URL=your mongodb url here
 
 ```
 
