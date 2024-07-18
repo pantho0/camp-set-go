@@ -25,7 +25,9 @@ export const router = createBrowserRouter([
         path: "products/:id",
         element: <ProductDetails />,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/api/v1/products/${params?.id}`),
+          fetch(
+            `https://campers-shop-backend-six.vercel.app/api/v1/products/${params?.id}`
+          ),
       },
       {
         path: "cart",

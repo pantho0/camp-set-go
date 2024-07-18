@@ -1,5 +1,5 @@
 import axios from "axios";
-const imgAPI = import.meta.env.VITE_IMGBB_API;
+const imgAPI = "f4dbedc6e55f9c2841407646add45c1b";
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${imgAPI}`;
 export const uploadImage = async (file) => {
   const formData = new FormData();

@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Container from "../../components/ui/Container";
 import { useQuery } from "@tanstack/react-query";
@@ -15,10 +15,10 @@ import toast from "react-hot-toast";
 
 const ProductDetails = () => {
   const axiosPublic = useAxios();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { data: product = {} } = useQuery({
+  const { data: product = {}, refetch } = useQuery({
     queryKey: ["product"],
     queryFn: async () => {
       const { data } = await axiosPublic(`/products/${id}`);
@@ -26,20 +26,15 @@ const ProductDetails = () => {
     },
   });
 
-  const handleQuantity = (e) => {
-    e.preventDefault();
-    setQuantity(e.target.value);
-  };
-
-  const handleCart = () => {
-    if (quantity > product.data?.stockQuantity) {
-      return toast.error("You can not select larger than quantity");
+  const handleCart = async (id) => {
+    const { data } = await axiosPublic.patch(
+      `/products/decrease-product/${id}`
+    );
+    if (data.success) {
+      refetch();
+      dispatch(addToCart({ ...product.data, quantity }));
+      toast.success("Product added to cart");
     }
-    if (!quantity) {
-      return toast.error("Please select quantity");
-    }
-    dispatch(addToCart({ ...product.data, quantity }));
-    toast.success("Product added to cart");
   };
 
   return (
@@ -86,20 +81,18 @@ const ProductDetails = () => {
 
             <div className="flex justify-center gap-2 md:justify-start md:gap-4">
               <div className="flex flex-col px-16 md:flex-row gap-2 md:px-0">
-                <div>
-                  <label className="input input-bordered flex items-center gap-2">
-                    Enter Quantity :
-                    <input
-                      onBlur={handleQuantity}
-                      type="text"
-                      className="grow"
-                      placeholder="Enter quantity"
-                    />
-                  </label>
-                </div>
-                <button onClick={handleCart} className="btn btn-outline">
-                  Add To Cart
-                </button>
+                {product?.data.stockQuantity === 0 ? (
+                  <button className="btn btn-outline cursor-not-allowed">
+                    Out of stock
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleCart(product?.data?._id)}
+                    className="btn btn-outline"
+                  >
+                    Add To Cart
+                  </button>
+                )}
               </div>
             </div>
           </div>

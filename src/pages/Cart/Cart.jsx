@@ -11,11 +11,13 @@ import {
 import { useState } from "react";
 import CheckOutModal from "../../components/modals/CheckOutModal";
 import Swal from "sweetalert2";
+import useAxios from "./../../components/hooks/useAxios";
 
 const Cart = () => {
   let [isOpen, setIsOpen] = useState(false);
   const cart = useSelector((state) => state.carts.carts);
   const dispatch = useDispatch();
+  const axiosPublic = useAxios();
 
   //modal controlling functions
   function open() {
@@ -36,24 +38,39 @@ const Cart = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        dispatch(removeFromCart(id));
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your product has been deleted from the cart.",
-          icon: "success",
-        });
+        const { data } = await axiosPublic.patch(
+          `/products/increase-product/${id}`
+        );
+        if (data.success) {
+          dispatch(removeFromCart(id));
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your product has been deleted from the cart.",
+            icon: "success",
+          });
+        }
       }
     });
   };
 
-  const handleAddQuantity = (id) => {
-    dispatch(addQuantity(id));
+  const handleAddQuantity = async (id) => {
+    const { data } = await axiosPublic.patch(
+      `/products/decrease-product/${id}`
+    );
+    if (data.success) {
+      dispatch(addQuantity(id));
+    }
   };
 
-  const handleMinusQuantity = (id) => {
-    dispatch(minusQuantity(id));
+  const handleMinusQuantity = async (id) => {
+    const { data } = await axiosPublic.patch(
+      `/products/increase-product/${id}`
+    );
+    if (data.success) {
+      dispatch(minusQuantity(id));
+    }
   };
 
   return (
